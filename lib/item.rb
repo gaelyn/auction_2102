@@ -13,4 +13,10 @@ class Item
   def current_high_bid
     @bids.values.max
   end
+
+  def list_bidder_names
+    bids.map do |bidder, amount|
+      bidder.name
+    end
+  end
 end

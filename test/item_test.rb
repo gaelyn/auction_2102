@@ -34,4 +34,11 @@ class ItemTest < Minitest::Test
     # require "pry"; binding.pry
     assert_equal @item1.current_high_bid, 22
   end
+
+  def test_it_can_list_bidder_names
+    @item1.add_bid(@attendee1, 22)
+    @item1.add_bid(@attendee2, 20)
+
+    assert_equal ["Megan", "Bob"], @item1.list_bidder_names
+  end
 end

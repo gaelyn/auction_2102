@@ -69,4 +69,39 @@ class AuctionTest < Minitest::Test
 
     assert_equal 87, @auction.potential_revenue
   end
+
+  def test_it_can_list_bidder_names
+    @auction.add_item(@item1)
+    @auction.add_item(@item2)
+    @auction.add_item(@item3)
+    @auction.add_item(@item4)
+    @auction.add_item(@item5)
+    @item1.add_bid(@attendee1, 22)
+    @item1.add_bid(@attendee2, 20)
+    @item4.add_bid(@attendee3, 50)
+    @item3.add_bid(@attendee2, 15)
+
+    assert_equal @auction.bidders, ["Megan", "Bob", "Mike"]
+  end
+
+  def test_it_can_list_bidder_info
+    @auction.add_item(@item1)
+    @auction.add_item(@item2)
+    @auction.add_item(@item3)
+    @auction.add_item(@item4)
+    @auction.add_item(@item5)
+    @item1.add_bid(@attendee1, 22)
+    @item1.add_bid(@attendee2, 20)
+    @item4.add_bid(@attendee3, 50)
+    @item3.add_bid(@attendee2, 15)
+
+    expected = {
+      @attendee1 => {:budget => @attendee1.budget, :items => [@item1]},
+      @attendee2 => {:budget => @attendee2.budget, :items => [@item1, @item4]},
+      @attendee3 => {:budget => @attendee3.budget, :items => [@item3]},
+    }
+
+    assert_equal expected, @auction.bidder_info
+
+  end
 end
