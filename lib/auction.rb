@@ -14,4 +14,15 @@ class Auction
     end
   end
 
+  def unpopular_items
+    @items.select do |item|
+      item.bids.empty?
+    end
+  end
+
+  def potential_revenue
+    @items.map do |item|
+      item.current_high_bid
+    end.compact.sum
+  end
 end
